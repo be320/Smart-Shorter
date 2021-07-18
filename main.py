@@ -22,6 +22,12 @@ def update_slug(slug):
     return update_short_link(slug, request.json)
 
 
+@app.route('/', methods=['GET'])
+@cross_origin()
+def test():
+    return {"test": "welcome to our server"}
+
+
 # This section for handling different errors: 400, 404, 405, 500
 
 @app.errorhandler(400)
