@@ -15,11 +15,11 @@ def short_links():
     else:
         return post_short_link(request.json)
 
-# #PUT /shortlinks/<slug> TO Update Link Data
-# @app.route('/shortlinks/<slug>', methods=['PUT'])
-# @cross_origin()
-# def update_slug(slug):
-#     return update_short_link(slug, request.json)
+#PUT /shortlinks/<slug> TO Update Link Data
+@app.route('/shortlinks/<slug>', methods=['PUT'])
+@cross_origin()
+def update_slug(slug):
+    return update_short_link(slug, request.json)
 
 
 # This section for handling different errors: 400, 404, 405, 500

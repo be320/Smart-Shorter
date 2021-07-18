@@ -1,7 +1,7 @@
 import random
 import string
 from database import getCollection
-from flask import jsonify
+from flask import jsonify, abort
 import json
 from bson import json_util
 
@@ -56,5 +56,37 @@ def get_short_links():
     }
     return jsonify(response), 201
 
+
+#Updates shortlink according to passed params
+def update_short_link(slug, request):
+    #Making insatnce of our database collection to get update short link by slug
+    db_collection = getCollection()
+    link = list(db_collection.find({"slug":slug}))[0]
+    if link is None:
+        abort(404)
+
+    #Change the object attributes passed
+    if 'web' in request:
+        link['web'] = request['web']
+    if 'android' in request:
+        if 'primary' in request['android']:
+            link['android']['primary'] = request['android']['primary']
+        if 'fallback' in request['android']:
+            link['android']['fallback'] = request['android']['fallback']
+    if 'ios' in request:
+        if 'primary' in request['ios']:
+            link['ios']['primary'] = request['ios']['primary']
+        if 'fallback' in request['ios']:
+            link['ios']['fallback'] = request['ios']['fallback']
+
+    db_collection.update_one({"slug":slug}, {"$set": link})
+
+    response = {
+        "status": "successful",
+        "message": "updated successfully"
+    }
+    return jsonify(response), 201
+
+#parsing the objects returned from MongoDB
 def parse_json(data):
     return json.loads(json_util.dumps(data))
