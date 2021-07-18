@@ -1,7 +1,7 @@
 import pymongo
 from dotenv import dotenv_values
 
-#.env file is private file containing the database name, password, and the collection name 
+#.env file contains the database name, password, and the collection name 
 config = dotenv_values(".env")
 
 #connecting to MLAB by pymongo client
