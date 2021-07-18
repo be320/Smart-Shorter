@@ -1,8 +1,12 @@
 from flask import Flask,request,jsonify
+from flask_cors import CORS, cross_origin
+from controller import *
+
 app = Flask(__name__)
 
 
 @app.route('/shortlinks', methods=['GET', 'POST'])
+@cross_origin()
 def short_links():
     if request.method == 'POST':
         return get_short_links()
@@ -11,6 +15,7 @@ def short_links():
 
 
 @app.route('/shortlinks/<slug>', methods=['PUT'])
+@cross_origin()
 def update_slug(slug):
     return update_short_link(slug, request.json)
 
