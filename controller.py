@@ -13,7 +13,7 @@ def generate_slug():
 #Adding new short link to the database
 def post_short_link(request):
     #If the slug not inserted, we generate a random slug
-    if 'slug' in request:
+    if request['slug'] != '':
         slug = request['slug']
     else:
         slug = generate_slug()
